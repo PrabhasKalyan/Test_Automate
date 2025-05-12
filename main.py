@@ -30,7 +30,6 @@ def gen_mail(name,res):
 def send_email(name,res,to_email):
     subject ="Test Automation"
     body = gen_mail(name=name,res=res)
-    print(body)
     from_email = "prabhakalyan0473@gmail.com"
     password = "xvzt htwa xcsj aekl"  
 
@@ -49,16 +48,18 @@ def send_email(name,res,to_email):
         server.sendmail(from_email, to_email, message.as_string())
         print(f"Email sent to {to_email} successfully!")
     except Exception as e:
-        print(f"Error: {e}")
+        # print(f"Error: {e}")
+        pass
     finally:
         server.quit() 
 
 @app.post("/")
 def final(names,mails,ress):
-    names = list(names)
-    mails = list(mails)
-    ress =  list(ress)
+    names = names.split(",")
+    mails = mails.split(",")
+    ress =  ress.split(",")
     for name,mail,res in zip(names,mails,ress):
+        # print(mail,name,res)
         send_email(name=name,res=res,to_email=mail)
 
 
